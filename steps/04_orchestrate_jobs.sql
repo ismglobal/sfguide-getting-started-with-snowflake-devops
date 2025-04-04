@@ -70,9 +70,10 @@ create or alter task email_notification
       if (:options = '[]') then
         CALL SYSTEM$SEND_EMAIL(
             'email_integration',
-            '<insert your email here>', -- INSERT YOUR EMAIL HERE
+            'mirko.daga@ism.global',
             'New data successfully processed: No suitable vacation spots found.',
-            'The query did not return any results. Consider adjusting your filters.');
+            'The query did not return any results. Consider adjusting your filters.'
+            );
       end if;
 
       let query varchar := 'Considering the data provided below in JSON format, pick the best city for a family vacation in summer?
@@ -83,14 +84,14 @@ create or alter task email_notification
 
       CALL SYSTEM$SEND_EMAIL(
         'email_integration',
-        '<insert your email here>', -- INSERT YOUR EMAIL HERE
+        'mirko.daga@ism.global', -- INSERT YOUR EMAIL HERE
         'New data successfully processed: The perfect place for your summer vacation has been found.',
         :response);
     exception
         when EXPRESSION_ERROR then
             CALL SYSTEM$SEND_EMAIL(
             'email_integration',
-            '<insert your email here>', -- INSERT YOUR EMAIL HERE
+            'mirko.daga@ism.global', -- INSERT YOUR EMAIL HERE
             'New data successfully processed: Cortex LLM function inaccessible.',
             'It appears that the Cortex LLM functions are not available in your region');
     end;
