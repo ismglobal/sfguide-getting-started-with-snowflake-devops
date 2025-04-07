@@ -280,7 +280,7 @@ root = Root(
     )
 
 # create views in Snowflake
-silver_schema = root.databases["quickstart_prod"].schemas["silver"]
+silver_schema = root.databases[f"quickstart_{os.environ['environment']}"].schemas["silver"]
 silver_schema.user_defined_functions.create(
     map_city_to_airport, mode=CreateMode.or_replace
 )

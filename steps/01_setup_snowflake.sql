@@ -1,3 +1,5 @@
+USE DATABASE SNOWFLAKE;
+
 USE ROLE ACCOUNTADMIN;
 
 CREATE OR ALTER WAREHOUSE QUICKSTART_WH 
@@ -7,7 +9,7 @@ CREATE OR ALTER WAREHOUSE QUICKSTART_WH
 
 
 -- Separate database for git repository
-CREATE OR ALTER DATABASE QUICKSTART_COMMON;
+CREATE OR ALTER DATABASE QUICKSTART_{{environment}};
 
 
 -- API integration is needed for GitHub integration
@@ -25,14 +27,13 @@ CREATE OR REPLACE GIT REPOSITORY quickstart_common.public.quickstart_repo
 
 CREATE OR ALTER DATABASE QUICKSTART_PROD;
 
+USE DATABASE QUICKSTART_PROD;
 
 -- To monitor data pipeline's completion
 CREATE OR REPLACE NOTIFICATION INTEGRATION email_integration
   TYPE=EMAIL
   ENABLED=TRUE;
 
-
-USE DATABASE QUICKSTART_PROD;
 -- Database level objects
 CREATE OR ALTER SCHEMA bronze;
 CREATE OR ALTER SCHEMA silver;
@@ -40,9 +41,10 @@ CREATE OR ALTER SCHEMA gold;
 
 
 -- Schema level objects
-CREATE OR REPLACE FILE FORMAT QUICKSTART_PROD.bronze.json_format TYPE = 'json';
-CREATE OR ALTER STAGE QUICKSTART_PROD.bronze.raw;
+--CREATE OR REPLACE FILE FORMAT QUICKSTART_PROD.bronze.json_format TYPE = 'json';
+
+--CREATE OR ALTER STAGE QUICKSTART_PROD.bronze.raw;
 
 
 -- Copy file from GitHub to internal stage
-copy files into @QUICKSTART_PROD.bronze.raw from @quickstart_common.public.quickstart_repo/branches/main/data/airport_list.json;
+--copy files into @QUICKSTART_PROD.bronze.raw from @quickstart_common.public.quickstart_repo/branches/main/data/airport_list.json;
