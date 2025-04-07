@@ -41,7 +41,7 @@ import json
 @vectorized(input=pandas.DataFrame)
 def main(df):
     airport_list = json.loads(
-        SnowflakeFile.open("@QUICKSTART_PROD.bronze.raw/airport_list.json", 'r', require_scoped_url = False).read()
+        SnowflakeFile.open("@QUICKSTART_{{environment}}.bronze.raw/airport_list.json", 'r', require_scoped_url = False).read()
     )
     airports = {airport[3]: airport[1] for airport in airport_list}
     return df[0].apply(lambda iata: airports.get(iata.upper()))
@@ -122,7 +122,7 @@ pipeline = [
         where departure_airport = (
             select $1:airport 
             from @quickstart_common.public.quickstart_repo/branches/main/data/home.json 
-                (FILE_FORMAT => QUICKSTART_PROD.bronze.json_format))
+                (FILE_FORMAT => QUICKSTART_{{environment}}.bronze.json_format))
         """,
     ),
     # Weather Source provides a weather forecast for the upcoming two weeks.

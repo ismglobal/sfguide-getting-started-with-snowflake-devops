@@ -25,9 +25,8 @@ CREATE OR REPLACE GIT REPOSITORY quickstart_common.public.quickstart_repo
   ORIGIN = 'https://github.com/ismglobal/sfguide-getting-started-with-snowflake-devops'; -- INSERT URL OF FORKED REPO HERE
 
 
-CREATE OR ALTER DATABASE QUICKSTART_PROD;
+CREATE OR ALTER DATABASE QUICKSTART_{{environment}};
 
-USE DATABASE QUICKSTART_PROD;
 
 -- To monitor data pipeline's completion
 CREATE OR REPLACE NOTIFICATION INTEGRATION email_integration
@@ -41,10 +40,10 @@ CREATE OR ALTER SCHEMA gold;
 
 
 -- Schema level objects
---CREATE OR REPLACE FILE FORMAT QUICKSTART_PROD.bronze.json_format TYPE = 'json';
+--CREATE OR REPLACE FILE FORMAT QUICKSTART_{{environment}}.bronze.json_format TYPE = 'json';
 
---CREATE OR ALTER STAGE QUICKSTART_PROD.bronze.raw;
+--CREATE OR ALTER STAGE QUICKSTART_{{environment}}.bronze.raw;
 
 
 -- Copy file from GitHub to internal stage
---copy files into @QUICKSTART_PROD.bronze.raw from @quickstart_common.public.quickstart_repo/branches/main/data/airport_list.json;
+--copy files into @QUICKSTART_{{environment}}.bronze.raw from @quickstart_common.public.quickstart_repo/branches/main/data/airport_list.json;
