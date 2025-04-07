@@ -11,7 +11,7 @@ from snowflake.core.user_defined_function import (
     UserDefinedFunction,
 )
 from snowflake.core.view import View, ViewColumn
-import toml
+#import toml
 
 """
 To join the flight and location focused tables 
@@ -262,9 +262,10 @@ pipeline = [
 ]
 
 print("Trying to connect")
-config = toml.load('./.snowflake/config.toml')["connections"]["default"]
+#config = toml.load('./.snowflake/config.toml')["connections"]["default"]
 
 # Establish Snowflake session
+"""
 root = Root(
     Session.builder.configs(
         {
@@ -278,7 +279,9 @@ root = Root(
         }
         ).getOrCreate()
     )
+"""
 
+root = Root(Session.builder.getOrCreate())
 # create views in Snowflake
 silver_schema = root.databases[f"quickstart_{os.environ['environment']}"].schemas["silver"]
 silver_schema.user_defined_functions.create(
