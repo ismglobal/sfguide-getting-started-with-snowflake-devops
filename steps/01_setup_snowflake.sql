@@ -39,9 +39,9 @@ CREATE OR ALTER SCHEMA gold;
 
 
 -- Schema level objects
-CREATE OR REPLACE FILE FORMAT bronze.json_format TYPE = 'json';
-CREATE OR ALTER STAGE bronze.raw;
+CREATE OR REPLACE FILE FORMAT QUICKSTART_PROD.bronze.json_format TYPE = 'json';
+CREATE OR ALTER STAGE QUICKSTART_PROD.bronze.raw;
 
 
 -- Copy file from GitHub to internal stage
-copy files into @bronze.raw from @quickstart_common.public.quickstart_repo/branches/main/data/airport_list.json;
+copy files into @QUICKSTART_PROD.bronze.raw from @quickstart_common.public.quickstart_repo/branches/main/data/airport_list.json;
